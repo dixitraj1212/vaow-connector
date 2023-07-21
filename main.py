@@ -7,6 +7,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
+print("Starting MQTT Connector")
 load_dotenv()
 
 def randomString(stringLength=6):
@@ -21,6 +22,7 @@ def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     if(mqtt_topic):
+        print("Subscribing to topic: " + mqtt_topic)
         client.subscribe(mqtt_topic)
 
 # The callback for when a PUBLISH message is received from the server.

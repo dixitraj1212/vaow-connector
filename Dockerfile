@@ -19,16 +19,17 @@ COPY main.py ./
 # Stage 2: Create the lightweight deployment image
 FROM python:3.9-slim
 
+RUN apt-get update && apt-get install -y --no-install-recommends libpq5
 # Set working directory
 WORKDIR /app
 
 # Copy the Python application from the builder stage
 COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
-COPY main.py main.dbc ./
+COPY main.py ./
 
 # Install additional dependencies if needed
 # Example: RUN apt-get update && apt-get install -y --no-install-recommends <package-name>
 
 # Run the Python consumer
-CMD ["python", "main.py"]
+CMD ["python3", "-u" ,"main.py"]
